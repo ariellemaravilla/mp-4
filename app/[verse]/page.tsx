@@ -2,18 +2,20 @@ import getVerse from "@/lib/getVerse";
 import type { BibleVerse } from "@/types";
 import type { Metadata } from "next";
 
-// Recommended type: matches what Next.js expects for dynamic routes
-type PageProps = {
-    params: { verse: string };
+// required by Next.js for dynamic params
+type Props = {
+    params: {
+        verse: string;
+    };
 };
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
     return {
-        title: params.verse,
+        title: `Verse: ${params.verse}`,
     };
 }
 
-export default async function VersePage({ params }: PageProps) {
+export default async function VersePage({ params }: Props) {
     const verse: BibleVerse | undefined | null = await getVerse(params.verse);
 
     if (!verse)
