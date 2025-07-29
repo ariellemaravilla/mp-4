@@ -6,12 +6,12 @@ type Verse = {
     text: string;
 };
 
-type Props = {
-    params: Record<"chapter", string>;
-};
-
-export default async function ChapterPage(props: Props) {
-    const { chapter } = await props.params;
+export default async function ChapterPage({
+  params,
+}: {
+  params: Promise<{ chapter: string }>;
+}){
+    const { chapter } = await params;
     try {
         const data = await getChapter(chapter);
 
