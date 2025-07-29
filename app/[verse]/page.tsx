@@ -1,21 +1,7 @@
 import getVerse from "@/lib/getVerse";
 import type { BibleVerse } from "@/types";
-import type { Metadata } from "next";
 
-// required by Next.js for dynamic params
-type Props = {
-    params: {
-        verse: string;
-    };
-};
-
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-    return {
-        title: `Verse: ${params.verse}`,
-    };
-}
-
-export default async function VersePage({ params }: Props) {
+export default async function Page({ params }: { params: { verse: string } }) {
     const verse: BibleVerse | undefined | null = await getVerse(params.verse);
 
     if (!verse)
