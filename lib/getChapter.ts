@@ -8,8 +8,6 @@
 type VerseMeta = { id: string };
 
 export async function getChapter(chapterId: string) {
-    console.log("Fetching:", chapterId); //Debugging
-
     const result = await fetch(`https://api.scripture.api.bible/v1/bibles/${process.env.BIBLE_ID}/chapters/${chapterId}/verses`,
         {
             headers: {
@@ -19,13 +17,12 @@ export async function getChapter(chapterId: string) {
     );
 
 
-    // Check if fetch was successful -> no: stop everything + crash
     if (!result.ok) throw new Error("Chapter not found");
 
     const json = await result.json();
     const verseIds: string[] = (json.data as VerseMeta[]).map((v) => v.id);
 
-    // Fetch each verse’s full content
+    // Code for fetching full content of each verse
     const verses = await Promise.all(
         verseIds.map(async (id) => {
             const res = await fetch(
@@ -36,14 +33,15 @@ export async function getChapter(chapterId: string) {
                     },
                 }
             );
+
             const verseJson = await res.json();
             return {
                 id,
                 reference: verseJson.data.reference,
-                text: verseJson.data.content, // HTML string!
+                text: verseJson.data.content,
             };
         })
     );
 
     return { verses };
-}                      //sending back data of API response
+}

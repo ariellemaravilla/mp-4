@@ -6,12 +6,9 @@ type Verse = {
     text: string;
 };
 
-export default async function ChapterPage({
-  params,
-}: {
-  params: Promise<{ chapter: string }>;
-}){
+export default async function ChapterPage({params,}: {params: Promise<{chapter: string }>;}){ //Wrapping in Promise due to Vercel Issues
     const { chapter } = await params;
+
     try {
         const data = await getChapter(chapter);
 
@@ -22,17 +19,15 @@ export default async function ChapterPage({
                     {data.verses.map((verse: Verse)=> (
                         <li key={verse.id}>
                             <strong>{verse.reference}</strong>:
-                            <div dangerouslySetInnerHTML={{ __html: verse.text }} />
+                            <div dangerouslySetInnerHTML={{ __html: verse.text }} />  {/*used to hide HTML tags returned by API*/}
                         </li>
                     ))}
                 </ul>
             </div>
         );
-    } catch (err) {
+    } catch (error) {
         return (
-            <div>
                 <p>Could not load the chapter.</p>
-            </div>
         );
     }
 }
