@@ -1,36 +1,15 @@
-"use client";
+import Link from "next/link";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-
-export default function HomePage() {
-    const [input, setInput] = useState("");
-    const router = useRouter();
-
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        if (!input.trim()) return;
-        router.push(`/${input}`);
-    };
-
+export default function Home() {
     return (
-        <main style={{ textAlign: "center", marginTop: "4rem" }}>
-            <h1>📖 Bible Verse Generator</h1>
-            <form onSubmit={handleSubmit}>
-                <input
-                    type="text"
-                    placeholder="e.g. JHN.3.16"
-                    value={input}
-                    onChange={(e) => setInput(e.target.value)}
-                    style={{ padding: "8px", width: "200px" }}
-                />
-                <button
-                    type="submit"
-                    style={{ marginLeft: "10px", padding: "8px 16px" }}
-                >
-                    Generate
-                </button>
-            </form>
-        </main>
+      <div>
+          <h1>Bible Search Engine</h1>
+          <h3>Popular Chapter</h3>
+          <ul>
+              <li><Link href="/JHN.3">John 3</Link></li>
+              <li><Link href="/GEN.1">Genesis 1</Link></li>
+              <li><Link href="/PSA.23.1">Psalm 23</Link></li>
+          </ul>
+      </div>
     );
 }
