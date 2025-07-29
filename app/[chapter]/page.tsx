@@ -6,17 +6,23 @@ type Verse = {
     text: string;
 };
 
-export default async function ChapterPage({ params }: { params: {chapter: string} }) {
+type PageProps = {
+    params: Record<"chapter", string>;
+};
+
+export default async function ChapterPage(props: PageProps) {
+    const { chapter } = await props.params;
     try {
-        const data = await getChapter(params.chapter);
+        const data = await getChapter(chapter);
 
         return (
             <div>
-                <h2>Chapter: {params.chapter}</h2>
+                <h2>Chapter: {chapter}</h2>
                 <ul>
                     {data.verses.map((verse: Verse)=> (
                         <li key={verse.id}>
-                            <strong>{verse.reference}</strong>: {verse.text}
+                            <strong>{verse.reference}</strong>:
+                            <div dangerouslySetInnerHTML={{ __html: verse.text }} />
                         </li>
                     ))}
                 </ul>
