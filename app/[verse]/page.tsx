@@ -2,13 +2,13 @@
 import getVerse from "@/lib/getVerse";
 import type { BibleVerse } from "@/types";
 
-export default async function VersePage({
-                                            params,
-                                        }: {
+type PageProps = {
     params: {
         verse: string;
     };
-}) {
+};
+
+export default async function VersePage({ params }: PageProps) {
     const verse: BibleVerse | null | undefined = await getVerse(params.verse);
 
     if (!verse) {
