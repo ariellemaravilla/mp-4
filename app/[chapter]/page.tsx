@@ -1,4 +1,8 @@
+
 import { getChapter } from "../../lib/getChapter"
+import styled from "styled-components";
+import DynamicPageWrapper from "../components/ChapterStyles";
+
 
 type Verse = {
     id: string;
@@ -13,7 +17,7 @@ export default async function ChapterPage({params,}: {params: Promise<{chapter: 
         const data = await getChapter(chapter);
 
         return (
-            <div>
+            <DynamicPageWrapper>
                 <h2>Chapter: {chapter}</h2>
                 <ul>
                     {data.verses.map((verse: Verse)=> (
@@ -23,7 +27,7 @@ export default async function ChapterPage({params,}: {params: Promise<{chapter: 
                         </li>
                     ))}
                 </ul>
-            </div>
+            </DynamicPageWrapper>
         );
     } catch (error) {
         return (
